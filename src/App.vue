@@ -15,7 +15,7 @@
             
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form class="form-inline my-2 my-lg-0 mr-auto ml-5">
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                  <input v-model="searchTerm" class="form-control mr-sm-2" type="search" placeholder="Trazi nesto" aria-label="Search">
                 </form>
                 <router-link v-if="!authenticated" class="btn btn-info my-2 my-sm-0 mr-2" to="/login">Login</router-link>
                 <span v-if="authenticated">
@@ -40,7 +40,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/javascript">
 import store from '@/store.js'
 
 export default {
