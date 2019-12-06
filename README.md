@@ -1,3 +1,17 @@
+# WEEK 4
+
+- Uzmemo kod za autentikaciju s Firebasea i stavimo u index.js
+
+- Koristimo kod iz primjera s https://firebase.google.com/docs/auth/web/password-auth
+
+- Kopiramo skripte iz primjera na odgovarajuca mjesta u kodu (Firebase API)
+
+- Stavimo API callback da nas Firebase obavijesti kad se stanje autentikacije promijenilo
+
+- Promijenimo nas state s podacimo iz callbacka (userEmail, authenticated)
+
+
+
 # WEEK 2
 
 # Zelimo lijep Instagram header

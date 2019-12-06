@@ -2,7 +2,9 @@
   <div class="row">
     <div class="col-8">
 
-      <InstagramCard :key="card.id" :info="card" v-for="card in filteredCards" />
+      <div v-if="authenticated">
+        <InstagramCard :key="card.id" :info="card" v-for="card in filteredCards" />
+      </div>
 
     </div>
     <div class="col-4">
