@@ -1,3 +1,86 @@
+# WEEK 5
+
+## Zelimo postati neku sliku
+
+- forma za postanje nove slike u Home.vue (samo URL)
+
+        <form @submit.prevent="post" class="form-inline mb-5">
+          <div class="form-group">
+            <label for="imageUrl">Image URL</label>
+            <input v-model="newUrl" type="text" class="form-control ml-2" id="imageUrl" placeholder="Enter the image URL">
+          </div>
+          <button type="submit" class="btn btn-primary ml-2">Post image</button>
+        </form>
+
+- dodamo newUrl u store i post funkciju
+
+  methods: {
+    post () {
+      this.cards.unshift({ id: this.cards.length + 1, title: 'dva', time: 'two hours ago', url: this.newUrl })
+      this.newUrl = ''
+    }
+  }
+
+## Zelimo persistence, spajamo se na bazu
+
+- Napravimo novu CloudStore bazu u eur3 regiji, start collection posts(url, email)
+
+- Rules postavimo bez sigurnosti
+	
+	allow read, write: if request.auth.uid != null;
+
+, inicijaliziramo u index.html
+
+	var db = firebase.firestore();
+
+- Dodamo na post i u bazu, osim u lokalni array:
+
+	db.collection("posts").add({ url: this.newUrl, email: this.userEmail })
+
+- Pogledamo da se u FireStoreu stvarno snimaju nase slike
+
+- Povucemo sve slike s Firebasea pri mountanju aplikacije
+
+    db.collection("posts").onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+			const data = doc.data()
+            this.cards.unshift({url: data.url, email: data.email, title: 'Some title', when: data.posted_at});
+        });
+    });
+
+- Dodamo change fetch only, dohvatimo i id, a zelimo i ordering i limit
+
+    db.collection("posts").orderBy("posted_at").limit(10)
+      .onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(change => {
+          if (change.type !== "added") return
+          const data = change.doc.data()
+          const card = {id: change.doc.id, url: data.url, email: data.email, title: 'Some title', posted_at: data.posted_at}
+          this.cards.unshift(card)
+        });
+    });
+
+## Umjesto epoch broja stavit cemo da pise kad je postano koristeci Moment
+
+	npm install moment / yarn add moment
+
+- U InstagramCard.vue
+
+	import moment from 'moment'
+
+  computed: {
+    timeAgo () {
+      return moment(this.info.posted_at).fromNow()
+    }
+  }
+
+- Umjesto title stavit cemo da pise email osobe koja je postala sliku
+
+## Stavimo i komentare
+
+- Dodat cemo child tablicu comments
+
+
 # WEEK 4
 
 - Uzmemo kod za autentikaciju s Firebasea i stavimo u index.js

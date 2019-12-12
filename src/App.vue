@@ -70,6 +70,15 @@ export default {
           this.$router.push({name: 'login'}).catch(err => console.log(err))
       }
     });
+    db.collection("posts").orderBy("posted_at").limit(10)
+      .onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(change => {
+          const data = change.doc.data()
+          if (change.type !== "added") return
+            const card = {id: change.doc.id, url: data.url, email: data.email, title: 'Some title', posted_at: data.posted_at, comments: data.comments}
+            this.cards.unshift(card)
+        });
+    });
   }
 }
 </script>
