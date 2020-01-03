@@ -70,7 +70,7 @@ export default {
           this.$router.push({name: 'login'}).catch(err => console.log(err))
       }
     });
-    db.collection("posts").orderBy("posted_at").limit(10)
+    db.collection("posts").orderBy("posted_at", "desc").limit(10)
       .onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
           const data = change.doc.data()
@@ -78,6 +78,9 @@ export default {
             const card = {id: change.doc.id, url: data.url, email: data.email, title: 'Some title', posted_at: data.posted_at, comments: data.comments}
             this.cards.unshift(card)
         });
+        this.cards.sort((a, b) => {
+          return b.posted_at - a.posted_at
+        })
     });
   }
 }
