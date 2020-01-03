@@ -6,9 +6,27 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home-path',
+    path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: '',
+        name: 'posts',
+        component: () => import(/* webpackChunkName: "post" */ '../views/Posts.vue')
+      },
+      {
+        path: 'newpost',
+        name: 'newpost',
+        component: () => import(/* webpackChunkName: "post" */ '../views/NewPost.vue')
+      },
+      {
+        path: 'post/:id',
+        props: true,
+        name: 'post-detail',
+        component: () => import(/* webpackChunkName: "post-detail" */ '../views/PostDetail.vue')
+      }
+    ]
   },
   {
     path: '/login',

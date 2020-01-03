@@ -5,5 +5,6 @@ export default {
     cards: [],
     searchTerm: '',
     postComment: '',
-    imageData: null
+    imageData: null,
+    tipKorisnika: null
 }

@@ -1,16 +1,9 @@
 <template>
   <div class="row">
     <div class="col-8">
-      <div v-if="authenticated">
-        <form @submit.prevent="postImage" class="mb-5">
-          <croppa :width="400" :height="400" v-model="imageData"></croppa>
-          <button type="submit" class="btn btn-primary ml-2">Post image</button>
-        </form>
-
-        <InstagramCard :key="card.id" :info="card" v-for="card in filteredCards" />
-      </div>
+      <router-view/>
     </div>
-    <div class="col-4">Trazimo sljedece: {{ searchTerm }}</div>
+    <div class="col-4">{{ tipKorisnika }}</div>
   </div>
 </template>
 
