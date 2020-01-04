@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Posts from '../views/Posts.vue'
 
 Vue.use(VueRouter)
 
@@ -13,12 +14,12 @@ const routes = [
       {
         path: '',
         name: 'posts',
-        component: () => import(/* webpackChunkName: "post" */ '../views/Posts.vue')
+        component: Posts,
       },
       {
         path: 'newpost',
         name: 'newpost',
-        component: () => import(/* webpackChunkName: "post" */ '../views/NewPost.vue')
+        component: () => import(/* webpackChunkName: "newpost" */ '../views/NewPost.vue')
       },
       {
         path: 'post/:id',
